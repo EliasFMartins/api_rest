@@ -1,4 +1,3 @@
-// import { json } from 'sequelize';
 import Aluno from '../models/Aluno';
 import Foto from '../models/Foto';
 
@@ -18,6 +17,7 @@ class AlunoController {
   async store(req, res) {
     try {
       const aluno = await Aluno.create(req.body);
+
       return res.json(aluno);
     } catch (e) {
       return res.status(400).json({
@@ -29,11 +29,13 @@ class AlunoController {
   async show(req, res) {
     try {
       const { id } = req.params;
+
       if (!id) {
         return res.status(400).json({
-          errors: ['faltando ID'],
+          errors: ['Faltando ID'],
         });
       }
+
       const aluno = await Aluno.findByPk(id, {
         attributes: ['id', 'nome', 'sobrenome', 'email', 'idade', 'peso', 'altura'],
         order: [['id', 'DESC'], [Foto, 'id', 'DESC']],
@@ -42,11 +44,13 @@ class AlunoController {
           attributes: ['url', 'filename'],
         },
       });
+
       if (!aluno) {
         return res.status(400).json({
           errors: ['Aluno não existe'],
         });
       }
+
       return res.json(aluno);
     } catch (e) {
       return res.status(400).json({
@@ -58,12 +62,15 @@ class AlunoController {
   async delete(req, res) {
     try {
       const { id } = req.params;
+
       if (!id) {
         return res.status(400).json({
-          errors: ['faltando ID'],
+          errors: ['Faltando ID'],
         });
       }
+
       const aluno = await Aluno.findByPk(id);
+
       if (!aluno) {
         return res.status(400).json({
           errors: ['Aluno não existe'],
@@ -84,12 +91,15 @@ class AlunoController {
   async update(req, res) {
     try {
       const { id } = req.params;
+
       if (!id) {
         return res.status(400).json({
-          errors: ['faltando ID'],
+          errors: ['Faltando ID'],
         });
       }
+
       const aluno = await Aluno.findByPk(id);
+
       if (!aluno) {
         return res.status(400).json({
           errors: ['Aluno não existe'],
@@ -97,7 +107,6 @@ class AlunoController {
       }
 
       const alunoAtualizado = await aluno.update(req.body);
-
       return res.json(alunoAtualizado);
     } catch (e) {
       return res.status(400).json({
@@ -106,4 +115,5 @@ class AlunoController {
     }
   }
 }
-export default new AlunoController(); // para exportar instaciada e so colocar new e o parantes
+
+export default new AlunoController();

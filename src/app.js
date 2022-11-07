@@ -1,12 +1,10 @@
-import dotenv from 'dotenv';
-
 import { resolve } from 'path';
-
-dotenv.config();
 
 import './database';
 
 import express from 'express';
+import cors from 'cors';
+import helmet from 'helmet';
 
 import homeRoutes from './routes/homeRoutes';
 import userRoutes from './routes/userRoutes';
@@ -14,17 +12,35 @@ import tokenRoutes from './routes/tokenRoutes';
 import alunoRoutes from './routes/alunoRoutes';
 import fotoRoutes from './routes/fotoRoutes';
 
+const whiteList = [
+  'https://react1.otaviomiranda.com.br',
+  'https://react2.otaviomiranda.com.br',
+  'http://localhost:3000',
+];
+
+const corsOptions = {
+  origin: function (origin, callback) {
+    if(whiteList.indexOf(origin) !== -1 || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  }
+};
+
 class App {
   constructor() {
-    this.app = express(); // vai ser setado pelo express
-    this.middlewares(); // vai ser chamado
-    this.routes(); // vai ser chamado tbm;
+    this.app = express();
+    this.middlewares();
+    this.routes();
   }
 
   middlewares() {
+    this.app.use(cors(corsOptions));
+    this.app.use(helmet());
     this.app.use(express.urlencoded({ extended: true }));
     this.app.use(express.json());
-    this.app.use(express.static(resolve(__dirname, 'uploads')));
+    this.app.use('/images/', express.static(resolve(__dirname, '..', 'uploads', 'images')));
   }
 
   routes() {
@@ -36,4 +52,4 @@ class App {
   }
 }
 
-export default new App().app; // atenção eu estava invocando a função ao invez do methodo ...
+export default new App().app;

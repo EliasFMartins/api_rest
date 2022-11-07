@@ -9,7 +9,7 @@ var _appConfig = require('../config/appConfig'); var _appConfig2 = _interopRequi
         defaultValue: '',
         validate: {
           notEmpty: {
-            msg: 'Campo não pode ficar vazio. ',
+            msg: 'Campo não pode ficar vazio.',
           },
         },
       },
@@ -18,7 +18,7 @@ var _appConfig = require('../config/appConfig'); var _appConfig2 = _interopRequi
         defaultValue: '',
         validate: {
           notEmpty: {
-            msg: 'Campo não pode ficar vazio. ',
+            msg: 'Campo não pode ficar vazio.',
           },
         },
       },
@@ -28,7 +28,6 @@ var _appConfig = require('../config/appConfig'); var _appConfig2 = _interopRequi
           return `${_appConfig2.default.url}/images/${this.getDataValue('filename')}`;
         },
       },
-
     }, {
       sequelize,
       tableName: 'fotos',
@@ -38,6 +37,5 @@ var _appConfig = require('../config/appConfig'); var _appConfig2 = _interopRequi
 
   static associate(models) {
     this.belongsTo(models.Aluno, { foreignKey: 'aluno_id' });
-    // this.hasOne(models.Aluno, { foreignKey: 'aluno_id' });
   }
 } exports.default = Foto;

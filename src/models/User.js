@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 import Sequelize, { Model } from 'sequelize';
 import bcryptjs from 'bcryptjs';
 
@@ -50,6 +49,7 @@ export default class User extends Model {
         user.password_hash = await bcryptjs.hash(user.password, 8);
       }
     });
+
     return this;
   }
 

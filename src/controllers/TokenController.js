@@ -4,12 +4,15 @@ import User from '../models/User';
 class TokenController {
   async store(req, res) {
     const { email = '', password = '' } = req.body;
+
     if (!email || !password) {
-      return res.status(404).json({
+      return res.status(401).json({
         errors: ['Credenciais inválidas'],
       });
     }
+
     const user = await User.findOne({ where: { email } });
+
     if (!user) {
       return res.status(401).json({
         errors: ['Usuário não existe'],
@@ -21,11 +24,14 @@ class TokenController {
         errors: ['Senha inválida'],
       });
     }
+
     const { id } = user;
     const token = jwt.sign({ id, email }, process.env.TOKEN_SECRET, {
       expiresIn: process.env.TOKEN_EXPIRATION,
     });
-    return res.json({ token });
+
+    return res.json({ token, user: { nome: user.nome, id, email } });
   }
 }
-export default new TokenController(); // para exportar instaciada e so colocar new e o parantes
+
+export default new TokenController();

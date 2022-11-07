@@ -15,6 +15,7 @@ exports. default = async (req, res, next) => {
   try {
     const dados = _jsonwebtoken2.default.verify(token, process.env.TOKEN_SECRET);
     const { id, email } = dados;
+
     const user = await _User2.default.findOne({
       where: {
         id,
@@ -27,12 +28,13 @@ exports. default = async (req, res, next) => {
         errors: ['Usuário inválido'],
       });
     }
+
     req.userId = id;
     req.userEmail = email;
     return next();
   } catch (e) {
     return res.status(401).json({
-      errors: ['Token expirado ou inválido'],
+      errors: ['Token expirado ou inválido.'],
     });
   }
 };

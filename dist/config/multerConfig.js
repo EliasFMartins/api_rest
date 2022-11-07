@@ -2,10 +2,11 @@
 var _path = require('path');
 
 const aleatorio = () => Math.floor(Math.random() * 10000 + 10000);
+
 exports. default = {
   fileFilter: (req, file, cb) => {
     if (file.mimetype !== 'image/png' && file.mimetype !== 'image/jpeg') {
-      return cb(new _multer2.default.MulterError('Arquivo precisa ser PNG ou JPG'));
+      return cb(new _multer2.default.MulterError('Arquivo precisa ser PNG ou JPG.'));
     }
 
     return cb(null, true);

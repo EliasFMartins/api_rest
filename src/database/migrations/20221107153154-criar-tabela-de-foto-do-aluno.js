@@ -1,4 +1,4 @@
-const { INTEGER } = require('sequelize');
+// const { INTEGER } = require('sequelize');
 
 // /** @type {import('sequelize-cli').Migration}
 module.exports = {
@@ -21,15 +21,17 @@ module.exports = {
       aluno_id: {
         type: Sequelize.INTEGER,
         allowNull: true,
-      },
-      created_at: {
-        type: Sequelize.DATE,
-        allowNull: false,
         references: {
           model: 'alunos',
           key: 'id',
         },
         onDelete: 'SET NULL',
+        onUpdate: 'CASCADE',
+      },
+      created_at: {
+        type: Sequelize.DATE,
+        allowNull: false,
+
       },
       updated_at: {
         type: Sequelize.DATE,

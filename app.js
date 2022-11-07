@@ -1,5 +1,6 @@
 import dotenv from 'dotenv';
 import { dirname, resolve } from 'path';
+
 dotenv.config();
 
 import './src/database';
